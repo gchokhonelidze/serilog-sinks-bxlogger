@@ -1,0 +1,31 @@
+# --- .NET build output --------------------------------------------------------
+# bin/ and obj/ already cover every produced binary, so there is deliberately no
+# blanket *.dll / *.exe here -- that kind of rule silently swallows a file someone
+# later means to commit.
+bin/
+obj/
+artifacts/
+
+# --- Test output --------------------------------------------------------------
+TestResults/
+*.trx
+# Microsoft.Testing.Platform writes these beside the test executable.
+*.diag
+*.binlog
+
+# --- NuGet --------------------------------------------------------------------
+# Versions are centralised in Directory.Packages.props, which is committed.
+*.nupkg
+*.snupkg
+
+# --- IDE / editor -------------------------------------------------------------
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.DotSettings.user
+
+# --- OS -----------------------------------------------------------------------
+.DS_Store
+Thumbs.db

@@ -1,0 +1,18 @@
+# Normalise line endings in the repository, and check out LF everywhere.
+#
+# Without this, Windows clones get CRLF and Linux clones get LF for the same file,
+# which shows up as whole-file diffs between developers -- and, worse, a Dockerfile
+# or shell script with CRLF fails inside the Alpine images with an unhelpful
+# "not found" from the shebang line.
+* text=auto eol=lf
+
+# Windows-only tooling; these never run inside a container.
+*.ps1  text eol=crlf
+*.cmd  text eol=crlf
+*.bat  text eol=crlf
+*.slnx text eol=crlf
+
+*.png  binary
+*.jpg  binary
+*.ico  binary
+*.nupkg binary

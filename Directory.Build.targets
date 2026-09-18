@@ -1,0 +1,20 @@
+<Project>
+
+  <!-- Imported after every project body, so IsPackable has its final value here.
+       In Directory.Build.props it would still be the default and this would never
+       apply to the one project it is meant for. -->
+  <PropertyGroup Label="Reproducible packages" Condition="'$(IsPackable)' == 'true'">
+    <!-- Same commit in, byte-identical package out, which is what makes a published
+         artifact something you can re-derive rather than have to trust. -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <!-- SourceLink, which the SDK wires up for GitHub on its own. A stack frame in a
+         consumer's debugger resolves to this repository at the exact commit the package
+         was built from. PublishRepositoryUrl puts that URL in the nuspec. -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <!-- Generated files have no commit to point at, so they are carried in the PDB. -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+</Project>

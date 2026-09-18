@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BXLogger.Serilog.Sink/BXLogger.Serilog.Sink.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BXLogger.Serilog.Sink.Tests/BXLogger.Serilog.Sink.Tests.csproj" />
+  </Folder>
+</Solution>
