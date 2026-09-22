@@ -40,6 +40,32 @@ builder.Host.UseSerilog((context, services, config) => config
         apiKey: builder.Configuration["BXLogger:Sink:ApiKey"]!));
 ```
 
+## JSON payloads
+
+Serilog destructures by reflection, and a `System.Text.Json` document has no properties
+worth reflecting over: a DTO carrying a parsed request body logs as
+`Dto { Data: JsonDocument { RootElement: JsonElement { ValueKind: Object } } }`, with the
+payload gone. Register the policy that ships with this package and the JSON is captured
+as JSON instead — at any depth, including a document nested inside another destructured
+object:
+
+```csharp
+Log.Logger = new LoggerConfiguration()
+    .Destructure.Json()
+    .WriteTo.BXLogger(..)
+    .CreateLogger();
+
+Log.Error(ex, "Request rejected {@Dto}", dto); // Dto.Data.amount is now a filterable path
+```
+
+It covers `JsonDocument` and `JsonElement`. Descending stops at `maxDepth` (12, matching
+the server's own path extraction) and `maxItems` per container (128), past which the rest
+is kept as raw text rather than dropped — both overridable:
+`Destructure.Json(maxDepth: 6, maxItems: 32)`.
+
+This is deliberately opt-in and cannot be done by the sink: destructuring happens when an
+event is captured, at the top of the pipeline, before any sink is involved.
+
 ## Options
 
 | Option | Default | Notes |
