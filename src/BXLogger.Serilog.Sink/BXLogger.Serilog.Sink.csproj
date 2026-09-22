@@ -15,7 +15,7 @@
     <Title>BXLogger Serilog Sink</Title>
     <!-- VersionPrefix, not Version: an explicit Version wins outright and would
          make pack.ps1 -VersionSuffix silently do nothing. -->
-    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionPrefix>0.2.0</VersionPrefix>
     <Description>Serilog sink that ships structured log events to a BXLogger server over HTTP using CLEF.</Description>
     <PackageTags>serilog;logging;sink;bxlogger;clef;structured-logging</PackageTags>
 

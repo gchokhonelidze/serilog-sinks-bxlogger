@@ -6,7 +6,20 @@ this file covers the package alone.
 The package follows [Semantic Versioning](https://semver.org/). Below 1.0.0 the minor
 number is the breaking one, which is the usual reading of semver for a `0.x` library.
 
-## Unreleased
+## 0.2.0
+
+### Added
+
+- `Destructure.Json()`, a destructuring policy for `System.Text.Json`. Serilog's default
+  destructurer reflects over public properties, and a `JsonDocument` has one --
+  `RootElement`, whose own only property is `ValueKind` -- so a DTO carrying a parsed
+  request body reached the server as
+  `Dto { Data: JsonDocument { RootElement: JsonElement { ValueKind: Object } } }`, without
+  the payload. With the policy registered, `JsonDocument` and `JsonElement` are captured
+  as the JSON they hold, at any depth, and the server catalogues every path inside them.
+  Opt-in by necessity: destructuring happens at capture time, before a sink exists to do
+  it for you. Bounded by `maxDepth` (12) and `maxItems` (128) per container, because a
+  policy that builds its own values bypasses Serilog's destructuring limits.
 
 ### Fixed
 
